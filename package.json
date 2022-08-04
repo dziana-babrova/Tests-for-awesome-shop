@@ -13,6 +13,7 @@
     "wdio-chromedriver-service": "^7.3.2"
   },
   "scripts": {
-    "wdio": "wdio run wdio.conf.js"
-  }
+    "wdio": "wdio run wdio.conf.cjs"
+  },
+  "type": "module"
 }
