@@ -41,14 +41,14 @@ describe("On Awesome-shop", () => {
     await expect(subTotal).toBeExisting();
     const subTotalText = await subTotal.getText();
     const subTotalPrice = Number(subTotalText.slice(11, subTotalText.length).replace(",", ""));
-    const DiscountToBe = -((subTotalPrice * 15) / 100);
+    const discountToBe = -((subTotalPrice * 15) / 100);
 
-    const Discount = await $("tr*=Coupon (LuckyUser):");
-    await expect(Discount).toBeExisting();
-    const DiscountText = await Discount.getText();
-    const DiscountPrice = Number(DiscountText.slice(21, DiscountText.length));
+    const discount = await $("tr*=Coupon (LuckyUser):");
+    await expect(discount).toBeExisting();
+    const discountText = await discount.getText();
+    const discountPrice = Number(discountText.slice(21, discountText.length));
 
-    expect(DiscountPrice).toEqual(DiscountToBe);
+    expect(discountPrice).toEqual(discountToBe);
 
     await $("#content > div.buttons.clearfix > div.pull-right > a").click();
     await $("label*=new address").click();

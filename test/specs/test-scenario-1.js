@@ -24,8 +24,9 @@ describe('On Awesome-shop', () => {
       let testValueForTextArea = "";
       if (valueForTextArea.length > 20) {
         testValueForTextArea = await valueForTextArea.slice(20);
-      } else
-      { testValueForTextArea = await valueForTextArea; }
+      } else {
+        testValueForTextArea = await valueForTextArea;
+      }
 
       const itemCount = 3;
       await $("input#input-quantity").setValue(itemCount);
@@ -50,16 +51,16 @@ describe('On Awesome-shop', () => {
         itemCount.toString()
       );
 
-        const subTotal = await $("tr*=Sub-Total");
-        await expect(subTotal).toBeExisting();
-        const subTotalText = await subTotal.getText();
-        const subTotalPrice = Number(subTotalText.slice(11, subTotalText.length));
-        const vatToBe = (subTotalPrice * 20 / 100);
+      const subTotal = await $("tr*=Sub-Total");
+      await expect(subTotal).toBeExisting();
+      const subTotalText = await subTotal.getText();
+      const subTotalPrice = Number(subTotalText.slice(11, subTotalText.length));
+      const vatToBe = (subTotalPrice * 20 / 100);
 
-        const vat = await $("tr*=VAT"); 
-        await expect(vat).toBeExisting();
-        const vatText = await vat.getText();
-        const vatPrice = Number(vatText.slice(11, vatText.length));
+      const vat = await $("tr*=VAT"); 
+      await expect(vat).toBeExisting();
+      const vatText = await vat.getText();
+      const vatPrice = Number(vatText.slice(11, vatText.length));
       
       await expect(vatPrice).toEqual(vatToBe);
       
