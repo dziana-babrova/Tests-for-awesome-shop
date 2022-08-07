@@ -1,5 +1,6 @@
-export class Page {
-  async open(url) {
-    return await browser.url(url);
+export default class Page {
+  async open(baseUrl) {
+    await browser.url(baseUrl);
+    await browser.maximizeWindow();
   }
 }

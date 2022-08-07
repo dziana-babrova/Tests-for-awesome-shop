@@ -1,83 +1,50 @@
-import { faker } from "@faker-js/faker";
-const user = {
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  address: faker.address.streetAddress({ useFullAddress: false }),
-  city: faker.address.city(),
-};
+import HomePage from "../../app/page-objects/home-page.js";
+import LoginPage from "../../app/page-objects/login-page.js";
+import ItemPage from "../../app/page-objects/item-page.js";
+import CartPage from "../../app/page-objects/cart-page.js";
+import CheckoutPage from "../../app/page-objects/checkout-page.js";
+import SuccessfulCheckoutPage from "../../app/page-objects/successful-checkout-page.js";
+import OrderHistoryPage from "../../app/page-objects/order-history-page.js";
+import OrderDetailsPage from "../../app/page-objects/order-details-page.js";
 
 describe("On Awesome-shop", () => {
   it("user could log in and complete a checkout with a coupon", async () => {
-    await browser.url(`https://awesome-shop.ru/`);
-    await browser.maximizeWindow();
+    await HomePage.open();
+    await HomePage.goToLoginPage();
+    await LoginPage.login("SarahJasmine@gmail.com", "123Qwer!");
+    await LoginPage.goToDefaultPage();
+    await HomePage.clickOnItemToBuy2();
+    await ItemPage.selectQuantityOfItems(7);
+    await ItemPage.clickOnAddToCartButton();
+    await ItemPage.goToCartPage();
+    await CartPage.applyCoupon();
+    await expect(CartPage.appliedCouponAlert).toBeExisting();
+    await expect(CartPage.appliedCouponAlert).toHaveTextContaining("Success: Your coupon discount has been applied!");
 
-    const accountSection = await $(".acc-section");
-    await accountSection.click();
-
-    await $("*=Login").click();
-    await $("#input-email").setValue("SarahJasmine@gmail.com");
-    await $("#input-password").setValue("123Qwer!");
-    await $("input[value=Login]").click();
-
-    await $("#logo").click();
-
-    const item = await $("=iPhone");
-    await item.click();
-
-    const itemCount = 7;
-    await $("input#input-quantity").setValue(itemCount);
-    await $("button=Add to Cart").click();
-
-    await $("#cart-total").click();
-    await $("=View Cart").click();
-
-    await $("=Use Coupon Code").click();
-    await $("#input-coupon").setValue("LuckyUser");
-    await $("#button-coupon").click();
-    await expect($(".alert-success")).toBeExisting();
-    await expect($(".alert-success")).toHaveTextContaining("Success: Your coupon discount has been applied!");
-
-    const subTotal = await $("tr*=Sub-Total");
-    await expect(subTotal).toBeExisting();
-    const subTotalText = await subTotal.getText();
+    await expect(CartPage.subTotalLine).toBeExisting();
+    const subTotalText = await CartPage.getTextFromSubTotal();
     const subTotalPrice = Number(subTotalText.slice(11, subTotalText.length).replace(",", ""));
     const discountToBe = -((subTotalPrice * 15) / 100);
 
-    const discount = await $("tr*=Coupon (LuckyUser):");
-    await expect(discount).toBeExisting();
-    const discountText = await discount.getText();
+    await expect(CartPage.discountLine).toBeExisting();
+    const discountText = await CartPage.getTextFromDiscountLine();
     const discountPrice = Number(discountText.slice(21, discountText.length));
 
     expect(discountPrice).toEqual(discountToBe);
 
-    await $("#content > div.buttons.clearfix > div.pull-right > a").click();
-    await $("label*=new address").click();
-    await $("#input-payment-firstname").setValue(user.firstName);
-    await $("#input-payment-lastname").setValue(user.lastName);
-    await $("#input-payment-address-1").setValue(user.address);
-    await $("#input-payment-city").setValue(user.city);
-    await $("[name=zone_id]").click();
-    await $("#input-payment-zone > option:nth-child(2)").click();
-    await $("input#button-payment-address").click();
+    await CartPage.goToCheckoutPage();
+    await CheckoutPage.addNewBillingAddress();
+    await CheckoutPage.useExistingDeliveryAddress();
+    await CheckoutPage.addDeliveryMethod();
+    await CheckoutPage.addPaymentMethod();
+    await CheckoutPage.confirmPaymentMethod();
+    await CheckoutPage.confirmOrder();
 
-    await $("label*=existing address").click();
-    await $("#button-shipping-address").click();
+    await expect(SuccessfulCheckoutPage.messageTitle).toBeExisting();
+    await expect(SuccessfulCheckoutPage.messageTitle).toHaveTextContaining("Your order has been placed!");
 
-    await $("[name=comment]").setValue("Some delivery info");
-    await $("input#button-shipping-method").click();
-
-    await $("label*=Cash On Delivery").click();
-    await $("[name=agree]").click();
-    await $("input#button-payment-method").click();
-
-    await $("#button-confirm").click();
-
-    await expect($("h1")).toBeExisting();
-    await expect($("h1")).toHaveTextContaining("Your order has been placed!");
-
-    await $(".acc-section").click();
-    await $("=Order History").click();
-    await $(".btn-info").click();
-    await expect($("td=iPhone")).toBeExisting();
+    await SuccessfulCheckoutPage.goToOrderHistoryPage();
+    await OrderHistoryPage.clickOnFirstViewButton();
+    await expect(OrderDetailsPage.orderedItem).toBeExisting();
   });
 });
