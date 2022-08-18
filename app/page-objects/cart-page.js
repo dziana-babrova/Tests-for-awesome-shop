@@ -64,7 +64,8 @@ class CartPage extends BasePage {
   async applyCoupon() {
     await this.useCouponCodeOption.click();
     await this.couponField.setValue("LuckyUser");
-    await this.applyCouponButton.click();
+    await browser.keys("Tab");
+    await browser.keys("Enter");
   }
 
   get appliedCouponAlert() {
