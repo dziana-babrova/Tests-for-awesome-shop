@@ -1,68 +1,58 @@
+import homePage from "../../app/page-objects/home-page.js";
+import itemPage from "../../app/page-objects/item-page.js";
+import cartPage from "../../app/page-objects/cart-page.js";
 
-describe('On Awesome-shop', () => {
-    it('user could add a product to the cart', async () => {
-      await browser.url(`https://awesome-shop.ru/`);
-      await browser.maximizeWindow();
+import { faker } from "@faker-js/faker";
+const randomText = {
+  textInputValue: faker.lorem.text(Math.round(Math.random() * (4 - 1) + 1)),
+  textAreaInputValue: faker.lorem.text(Math.round(Math.random() * (40 - 1) + 1)),
+};
 
-      const item = await $('=Apple Cinema 30"');
-      await item.click();
-      const textForItem = await item.getText();
-        
-      await $("label*=Medium").click();
-      await $("label*=Checkbox 2").click();
-      await $("label*=Checkbox 4").click();
-        
-      await $("#input-option208").setValue("some new text");
-      const valueForTextInput = await $("#input-option208").getText();
+describe("On Awesome-shop", () => {
+  it("user could add a product to the cart", async () => {
+    await homePage.open();
+    const textForItem = await homePage.getTextFromAppleCinemaItem();
+    await homePage.clickAppleCinemaItem();
+    await itemPage.selectItemValues(randomText.textInputValue, randomText.textAreaInputValue);
+    const valueForTextInput = await itemPage.getTextInputValue();
+    const valueForTextArea = await itemPage.getTextAreaValue();
+    await itemPage.selectQuantityOfItems(3);
+    const QuntityOfItemsValue = await itemPage.getQuantityOfItems();
+    await itemPage.clickOnAddToCartButton();
 
-      await $("select#input-option217").click();
-      await $("option*=Green").click();
-        
-      await $("#input-option209").setValue("some new text some new text");
-      const valueForTextArea = await $("#input-option209").getValue();
+    await expect(itemPage.successAlert).toBeExisting();
+    await expect(itemPage.successAlert).toHaveTextContaining(
+      `Success: You have added ${textForItem} to your shopping cart!`
+    );
 
-      let testValueForTextArea = "";
-      if (valueForTextArea.length > 20) {
-        testValueForTextArea = await valueForTextArea.slice(20);
-      } else {
-        testValueForTextArea = await valueForTextArea;
-      }
+    await itemPage.goToCartPage();
 
-      const itemCount = 3;
-      await $("input#input-quantity").setValue(itemCount);
-      await $("button=Add to Cart").click();
-      const successMessage = await $(".alert-success");
-      await expect(successMessage).toBeExisting();
-      await expect(successMessage).toHaveTextContaining(
-        `Success: You have added ${textForItem} to your shopping cart!`
-      );
-    
-      await $("#cart").click();
-      await $("=View Cart").click();
-        
-      await expect(item).toBeExisting();
-      await expect($("small*=Radio:")).toHaveTextContaining("Radio: Medium");
-      await expect($("small*=Checkbox: Checkbox 2")).toHaveTextContaining("Checkbox: Checkbox 2");
-      await expect($("small*=Checkbox: Checkbox 4")).toHaveTextContaining("Checkbox: Checkbox 4");
-      await expect($("small*=Text:")).toHaveTextContaining(`${valueForTextInput}`);
-      await expect($("small*=Select:")).toHaveTextContaining("Green");
-      await expect($("small*=Textarea:")).toHaveTextContaining(`${testValueForTextArea}`);
-      await expect($("#content > form > div > table > tbody > tr > td:nth-child(4) > div > input")).toHaveValue(
-        itemCount.toString()
-      );
+    await expect(homePage.appleCinemaItem).toBeExisting();
+    await expect(cartPage.radioItem).toHaveTextContaining("Radio: Medium");
+    await expect(cartPage.checkbox2Item).toHaveTextContaining("Checkbox: Checkbox 2");
+    await expect(cartPage.checkbox4Item).toHaveTextContaining("Checkbox: Checkbox 4");
+    await expect(cartPage.textItem).toHaveTextContaining(`${valueForTextInput}`);
+    await expect(cartPage.selectItem).toHaveTextContaining("Green");
 
-      const subTotal = await $("tr*=Sub-Total");
-      await expect(subTotal).toBeExisting();
-      const subTotalText = await subTotal.getText();
-      const subTotalPrice = Number(subTotalText.slice(11, subTotalText.length));
-      const vatToBe = (subTotalPrice * 20 / 100);
+    let testValueForTextArea = "";
+    if (valueForTextArea.length > 20) {
+      testValueForTextArea = await valueForTextArea.slice(20);
+    } else {
+      testValueForTextArea = await valueForTextArea;
+    }
 
-      const vat = await $("tr*=VAT"); 
-      await expect(vat).toBeExisting();
-      const vatText = await vat.getText();
-      const vatPrice = Number(vatText.slice(11, vatText.length));
-      
-      await expect(vatPrice).toEqual(vatToBe);
-      
-    });
+    await expect(cartPage.textAreaItem).toHaveTextContaining(`${testValueForTextArea}`);
+    await expect(cartPage.quantityItem).toHaveValue(`${QuntityOfItemsValue}`);
+
+    await expect(cartPage.subTotalLine).toBeExisting();
+    const subTotalText = await cartPage.getTextFromSubTotal();
+    const subTotalPrice = Number(subTotalText.slice(11, subTotalText.length));
+    const vatToBe = (subTotalPrice * 20) / 100;
+
+    await expect(cartPage.vatLine).toBeExisting();
+    const vatText = await cartPage.getTextFromVat();
+    const vatPrice = Number(vatText.slice(11, vatText.length));
+
+    await expect(vatPrice).toEqual(vatToBe);
+  });
 });
