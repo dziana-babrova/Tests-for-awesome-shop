@@ -1,16 +1,10 @@
 import BasePage from "../../app/page-objects/base-page.js";
-import { faker } from "@faker-js/faker";
-const randomText = {
-  textInputValue: faker.lorem.text(Math.round(Math.random() * (4 - 1) + 1)),
-  textAreaInputValue: faker.lorem.text(Math.round(Math.random() * (40 - 1) + 1)),
-};
-
 class ItemPage extends BasePage {
   open() {
     return super.open("/index.php?route=product/product&product_id=42");
   }
 
-  get mediumRadiobutton() {
+  get mediumRadioButton() {
     return $("label*=Medium");
   }
 
@@ -50,14 +44,14 @@ class ItemPage extends BasePage {
     return $(".alert-success");
   }
 
-  async selectItemValues() {
-    await this.mediumRadiobutton.click();
+  async selectItemValues(textInputValue, textAreaInputValue) {
+    await this.mediumRadioButton.click();
     await this.checkbox2.click();
     await this.checkbox4.click();
-    await this.textInput.setValue(randomText.textInputValue);
+    await this.textInput.setValue(textInputValue);
     await this.colorDropdown.click();
     await this.colorOption.click();
-    await this.textArea.setValue(randomText.textAreaInputValue);
+    await this.textArea.setValue(textAreaInputValue);
   }
 
   async selectQuantityOfItems(itemsQuantity) {

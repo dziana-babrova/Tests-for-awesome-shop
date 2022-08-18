@@ -1,14 +1,4 @@
 import BasePage from "../../app/page-objects/base-page.js";
-
-import { faker } from "@faker-js/faker";
-const user = {
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  address: faker.address.streetAddress({ useFullAddress: false }),
-  city: faker.address.city(),
-  comment: faker.lorem.words(Math.round(Math.random() * (20 - 1) + 1)),
-};
-
 class CheckoutPage extends BasePage {
   get newBillingAddressRadioButton() {
     return $("label*=new address");
@@ -46,7 +36,7 @@ class CheckoutPage extends BasePage {
     return $("input#button-payment-address");
   }
 
-  get existingDeliveryAddressRadiobutton() {
+  get existingDeliveryAddressRadioButton() {
     return $("label*=existing address");
   }
 
@@ -78,24 +68,24 @@ class CheckoutPage extends BasePage {
     return $("#button-confirm");
   }
 
-  async addNewBillingAddress() {
+  async addNewBillingAddress(firstName, lastName, address, city) {
     await this.newAddressRadioButton.click();
-    await this.firstNameInput.setValue(user.firstName);
-    await this.lastNameInput.setValue(user.lastName);
-    await this.address1Input.setValue(user.address);
-    await this.cityInput.setValue(user.city);
+    await this.firstNameInput.setValue(firstName);
+    await this.lastNameInput.setValue(lastName);
+    await this.address1Input.setValue(address);
+    await this.cityInput.setValue(city);
     await this.regionDropdown.click();
     await this.regionDropdownOption.click();
     await this.submitBillingAddressButton.click();
   }
 
   async useExistingDeliveryAddress() {
-    await this.existingDeliveryAddressRadiobutton.click();
+    await this.existingDeliveryAddressRadioButton.click();
     await this.submitDeliveryAddressButton.click();
   }
 
-  async addDeliveryMethod() {
-    await this.commentOnOrder.setValue(user.comment);
+  async addDeliveryMethod(comment) {
+    await this.commentOnOrder.setValue(comment);
     await this.submitCommentOnOrderButton.click();
   }
 

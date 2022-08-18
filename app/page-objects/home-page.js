@@ -1,24 +1,24 @@
 import BasePage from "../../app/page-objects/base-page.js";
 
 class HomePage extends BasePage {
-  get itemToBuy() {
+  get appleCinemaItem() {
     return $('=Apple Cinema 30"');
   }
 
-  async clickOnItemToBuy() {
-    await this.itemToBuy.click();
+  async clickAppleCinemaItem() {
+    await this.appleCinemaItem.click();
   }
 
-  async getTextFromItemToBuy() {
-    return await this.itemToBuy.getText();
+  async getTextFromAppleCinemaItem() {
+    return await this.appleCinemaItem.getText();
   }
 
-  get itemToBuy2() {
+  get iPhoneItem() {
     return $("=iPhone");
   }
 
-  async clickOnItemToBuy2() {
-    await this.itemToBuy2.click();
+  async clickIPhoneItem() {
+    await this.iPhoneItem.click();
   }
 }
 
