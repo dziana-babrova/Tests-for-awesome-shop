@@ -1,5 +1,4 @@
 import BasePage from "../../app/page-objects/base-page.js";
-
 class CartPage extends BasePage {
   open() {
     return super.open("/index.php?route=checkout/cart");
@@ -61,9 +60,9 @@ class CartPage extends BasePage {
     return $("#button-coupon");
   }
 
-  async applyCoupon() {
+  async applyCoupon(coupon) {
     await this.useCouponCodeOption.click();
-    await this.couponField.setValue("LuckyUser");
+    await this.couponField.setValue(coupon.couponLuckyUser);
     await browser.keys("Tab");
     await browser.keys("Enter");
   }

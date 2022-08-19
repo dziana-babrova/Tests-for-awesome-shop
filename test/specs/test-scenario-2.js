@@ -6,28 +6,21 @@ import checkoutPage from "../../app/page-objects/checkout-page.js";
 import successfulCheckoutPage from "../../app/page-objects/successful-checkout-page.js";
 import orderHistoryPage from "../../app/page-objects/order-history-page.js";
 import orderDetailsPage from "../../app/page-objects/order-details-page.js";
-import { faker } from "@faker-js/faker";
-
-const user = {
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  address: faker.address.streetAddress({ useFullAddress: false }),
-  city: faker.address.city(),
-  comment: faker.lorem.words(Math.round(Math.random() * (20 - 1) + 1)),
-};
-
+import { user } from "../../app/business-objects/data-for-tests.js";
+import { coupons } from "../../app/business-objects/data-for-tests.js";
+import { testDataForScenario2 } from "../../app/business-objects/data-for-tests.js";
 
 describe("On Awesome-shop", () => {
   it("user could log in and complete a checkout with a coupon", async () => {
     await homePage.open();
     await homePage.goToLoginPage();
-    await loginPage.login("SarahJasmine@gmail.com", "123Qwer!");
+    await loginPage.login(user);
     await loginPage.goToDefaultPage();
     await homePage.clickIPhoneItem();
-    await itemPage.selectQuantityOfItems(7);
+    await itemPage.selectQuantityOfItems(testDataForScenario2);
     await itemPage.clickOnAddToCartButton();
     await itemPage.goToCartPage();
-    await cartPage.applyCoupon();
+    await cartPage.applyCoupon(coupons);
     await expect(cartPage.appliedCouponAlert).toBeExisting();
     await expect(cartPage.appliedCouponAlert).toHaveTextContaining("Success: Your coupon discount has been applied!");
 
@@ -43,9 +36,9 @@ describe("On Awesome-shop", () => {
     expect(discountPrice).toEqual(discountToBe);
 
     await cartPage.goToCheckoutPage();
-    await checkoutPage.addNewBillingAddress(user.firstName, user.lastName, user.address, user.city);
+    await checkoutPage.addNewBillingAddress(user);
     await checkoutPage.useExistingDeliveryAddress();
-    await checkoutPage.addDeliveryMethod(user.comment);
+    await checkoutPage.addDeliveryMethod(testDataForScenario2);
     await checkoutPage.addPaymentMethod();
     await checkoutPage.confirmPaymentMethod();
     await checkoutPage.confirmOrder();

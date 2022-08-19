@@ -68,12 +68,12 @@ class CheckoutPage extends BasePage {
     return $("#button-confirm");
   }
 
-  async addNewBillingAddress(firstName, lastName, address, city) {
+  async addNewBillingAddress(user) {
     await this.newAddressRadioButton.click();
-    await this.firstNameInput.setValue(firstName);
-    await this.lastNameInput.setValue(lastName);
-    await this.address1Input.setValue(address);
-    await this.cityInput.setValue(city);
+    await this.firstNameInput.setValue(user.firstName);
+    await this.lastNameInput.setValue(user.lastName);
+    await this.address1Input.setValue(user.address);
+    await this.cityInput.setValue(user.city);
     await this.regionDropdown.click();
     await this.regionDropdownOption.click();
     await this.submitBillingAddressButton.click();
@@ -84,8 +84,8 @@ class CheckoutPage extends BasePage {
     await this.submitDeliveryAddressButton.click();
   }
 
-  async addDeliveryMethod(comment) {
-    await this.commentOnOrder.setValue(comment);
+  async addDeliveryMethod(setOfData) {
+    await this.commentOnOrder.setValue(setOfData.comment);
     await this.submitCommentOnOrderButton.click();
   }
 

@@ -44,7 +44,7 @@ class ItemPage extends BasePage {
     return $(".alert-success");
   }
 
-  async selectItemValues(textInputValue, textAreaInputValue) {
+  async selectItemValues(randomInput) {
     await browser.execute(() => {
       const radioButton2 = document.querySelectorAll("input[type=radio]")[1];
       const checkbox2 = document.querySelectorAll("input[type=checkbox]")[1];
@@ -53,14 +53,14 @@ class ItemPage extends BasePage {
       checkbox2.click();
       checkbox4.click();
     });
-    await this.textInput.setValue(textInputValue);
+    await this.textInput.setValue(setOfData.textInputValue);
     await this.colorDropdown.click();
     await this.colorOption.click();
-    await this.textArea.setValue(textAreaInputValue);
+    await this.textArea.setValue(setOfData.textAreaInputValue);
   }
 
-  async selectQuantityOfItems(itemsQuantity) {
-    await this.quantityOfItems.setValue(itemsQuantity);
+  async selectQuantityOfItems(quantity) {
+    await this.quantityOfItems.setValue(quantity.quantityOfItems);
   }
 
   async clickOnAddToCartButton() {

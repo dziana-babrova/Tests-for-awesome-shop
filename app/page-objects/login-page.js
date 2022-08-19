@@ -13,9 +13,9 @@ class LoginPage extends BasePage {
     return $('input[value="Login"]');
   }
 
-  async login(email, password) {
-    await this.inputEmail.setValue(email);
-    await this.inputPassword.setValue(password);
+  async login(user) {
+    await this.inputEmail.setValue(user.email);
+    await this.inputPassword.setValue(user.password);
     await this.buttonLogin.click();
   }
 }
