@@ -47,14 +47,10 @@ class ItemPage extends BasePage {
   async selectItemValues(textInputValue, textAreaInputValue) {
     await browser.execute(() => {
       const radioButton2 = document.querySelectorAll("input[type=radio]")[1];
-      radioButton2.click();
-    });
-    await browser.execute(() => {
       const checkbox2 = document.querySelectorAll("input[type=checkbox]")[1];
-      checkbox2.click();
-    });
-    await browser.execute(() => {
       const checkbox4 = document.querySelectorAll("input[type=checkbox]")[3];
+      radioButton2.click();
+      checkbox2.click();
       checkbox4.click();
     });
     await this.textInput.setValue(textInputValue);
