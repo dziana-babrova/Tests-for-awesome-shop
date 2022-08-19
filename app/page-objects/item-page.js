@@ -45,9 +45,14 @@ class ItemPage extends BasePage {
   }
 
   async selectItemValues(textInputValue, textAreaInputValue) {
-    await this.mediumRadioButton.click();
-    await this.checkbox2.click();
-    await this.checkbox4.click();
+    await browser.execute(() => {
+      const radioButton2 = document.querySelectorAll("input[type=radio]")[1];
+      const checkbox2 = document.querySelectorAll("input[type=checkbox]")[1];
+      const checkbox4 = document.querySelectorAll("input[type=checkbox]")[3];
+      radioButton2.click();
+      checkbox2.click();
+      checkbox4.click();
+    });
     await this.textInput.setValue(textInputValue);
     await this.colorDropdown.click();
     await this.colorOption.click();
