@@ -15,5 +15,8 @@
   "scripts": {
     "wdio": "wdio run wdio.conf.cjs"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "winston": "^3.8.1"
+  }
 }

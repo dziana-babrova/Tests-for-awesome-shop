@@ -1,4 +1,5 @@
 import BasePage from "../../app/page-objects/base-page.js";
+import logger from "../../test/config/logger.config.js";
 class ItemPage extends BasePage {
   open() {
     return super.open("/index.php?route=product/product&product_id=42");
@@ -44,27 +45,37 @@ class ItemPage extends BasePage {
     return $(".alert-success");
   }
 
-  async selectItemValues(randomInput) {
-    await browser.execute(() => {
+  async selectItemValues(setOfData) {
+    await browser.execute(async () => {
       const radioButton2 = document.querySelectorAll("input[type=radio]")[1];
       const checkbox2 = document.querySelectorAll("input[type=checkbox]")[1];
       const checkbox4 = document.querySelectorAll("input[type=checkbox]")[3];
-      radioButton2.click();
-      checkbox2.click();
-      checkbox4.click();
+      await radioButton2.click();
+      await checkbox2.click();
+      await checkbox4.click();
     });
+    logger.debug(
+      `Clicking '${await this.mediumRadioButton.selector}' radiobutton, '${await this.checkbox2.selector}', '${await this.checkbox4
+        .selector}'`
+    );
     await this.textInput.setValue(setOfData.textInputValue);
+    logger.debug(`Entering '${await setOfData.textInputValue}' into '${await this.textInput.selector}' field`);
     await this.colorDropdown.click();
+    logger.debug(`Opening '${await this.colorDropdown.selector}' dropdown with colors`);
     await this.colorOption.click();
+    logger.debug(`Selecting '${await this.colorOption.selector}' color`);
     await this.textArea.setValue(setOfData.textAreaInputValue);
+    logger.debug(`Entering '${await setOfData.textAreaInputValue}' into '${await this.textArea.selector}' field`);
   }
 
   async selectQuantityOfItems(quantity) {
     await this.quantityOfItems.setValue(quantity.quantityOfItems);
+    logger.debug(`Set ${await quantity.quantityOfItems} items into '${await this.quantityOfItems.selector}' quantity field`);
   }
 
   async clickOnAddToCartButton() {
     await this.addToCartButton.click();
+    logger.debug(`Clicking '${await this.addToCartButton.selector}' button`);
   }
 
   async getTextInputValue() {

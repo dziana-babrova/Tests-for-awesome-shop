@@ -2,6 +2,7 @@ import homePage from "../../app/page-objects/home-page.js";
 import itemPage from "../../app/page-objects/item-page.js";
 import cartPage from "../../app/page-objects/cart-page.js";
 import { testDataForScenario1 } from "../../app/business-objects/data-for-tests.js";
+// import logger from "../config/logger.config.js";
 
 describe("On Awesome-shop", () => {
   it("user could add a product to the cart", async () => {
@@ -16,9 +17,9 @@ describe("On Awesome-shop", () => {
     await itemPage.clickOnAddToCartButton();
 
     await expect(itemPage.successAlert).toBeExisting();
-    await expect(itemPage.successAlert).toHaveTextContaining(
-      `Success: You have added ${textForItem} to your shopping cart!`
-    );
+      await expect(itemPage.successAlert).toHaveTextContaining(
+        `Success: You have added ${textForItem} to your shopping cart!`
+      );
 
     await itemPage.goToCartPage();
 

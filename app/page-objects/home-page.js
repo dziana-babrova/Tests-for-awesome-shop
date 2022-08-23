@@ -1,4 +1,5 @@
 import BasePage from "../../app/page-objects/base-page.js";
+import logger from "../../test/config/logger.config.js";
 
 class HomePage extends BasePage {
   get appleCinemaItem() {
@@ -7,6 +8,7 @@ class HomePage extends BasePage {
 
   async clickAppleCinemaItem() {
     await this.appleCinemaItem.click();
+    logger.debug(`Clicking '${await this.appleCinemaItem.selector}' item`);
   }
 
   async getTextFromAppleCinemaItem() {

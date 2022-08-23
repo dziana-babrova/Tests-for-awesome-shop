@@ -1,5 +1,5 @@
 import BasePage from "../../app/page-objects/base-page.js";
-
+import logger from "../../test/config/logger.config.js";
 class LoginPage extends BasePage {
   get inputEmail() {
     return $("#input-email");
@@ -15,8 +15,11 @@ class LoginPage extends BasePage {
 
   async login(user) {
     await this.inputEmail.setValue(user.email);
+    logger.debug(`Entering '${await user.email}' into '${await this.inputEmail.selector}' field`);
     await this.inputPassword.setValue(user.password);
-    await this.buttonLogin.click();
+    logger.debug(`Entering '${await user.password}' into '${await this.inputPassword.selector}' field`);
+      await this.buttonLogin.click();
+      logger.debug(`Clicking '${await this.buttonLogin.selector}' button`);
   }
 }
 

@@ -1,4 +1,5 @@
 import Page from "../../app/page-objects/page.js";
+import logger from "../../test/config/logger.config.js";
 
 export default class BasePage extends Page {
   open() {
@@ -14,8 +15,10 @@ export default class BasePage extends Page {
   }
 
   async goToCartPage() {
-    await this.cartIcon.click();
+      await this.cartIcon.click();
+      logger.debug(`Viewing minimized cart by clicking '${await this.cartIcon.selector}' icon`);
     await this.viewCartLink.click();
+    logger.debug(`Viewing full-screen cart by clicking '${await this.viewCartLink.selector}' link`);
   }
 
   get accountSection() {
@@ -28,7 +31,9 @@ export default class BasePage extends Page {
 
   async goToLoginPage() {
     await this.accountSection.click();
+    logger.debug(`Opening menu by clicking '${await this.accountSection.selector}' icon`);
     await this.loginLink.click();
+    logger.debug(`Opening login page by clicking '${await this.loginLink.selector}' link`);
   }
 
   get logo() {
@@ -37,6 +42,7 @@ export default class BasePage extends Page {
 
   async goToDefaultPage() {
     await this.logo.click();
+    logger.debug(`Returning to main page by clicking '${await this.logo.selector}' icon`);
   }
 
   get orderHistoryLink() {
@@ -45,6 +51,8 @@ export default class BasePage extends Page {
 
   async goToOrderHistoryPage() {
     await this.accountSection.click();
+    logger.debug(`Opening menu by clicking '${await this.accountSection.selector}' icon`);
     await this.orderHistoryLink.click();
+    logger.debug(`Opening order history page by clicking '${await this.orderHistoryLink.selector}' link`);
   }
 }

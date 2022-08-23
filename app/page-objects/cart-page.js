@@ -1,4 +1,5 @@
 import BasePage from "../../app/page-objects/base-page.js";
+import logger from "../../test/config/logger.config.js";
 class CartPage extends BasePage {
   open() {
     return super.open("/index.php?route=checkout/cart");
@@ -62,9 +63,12 @@ class CartPage extends BasePage {
 
   async applyCoupon(coupon) {
     await this.useCouponCodeOption.click();
+    logger.debug(`Opening Coupon section by clicking '${await this.useCouponCodeOption.selector}' button`);
     await this.couponField.setValue(coupon.couponLuckyUser);
+    logger.debug(`Entering '${await coupon.couponLuckyUser}' into '${await this.couponField.selector}' field`);
     await browser.keys("Tab");
     await browser.keys("Enter");
+    logger.debug(`Applying coupon`);
   }
 
   get appliedCouponAlert() {
@@ -85,6 +89,7 @@ class CartPage extends BasePage {
 
   async goToCheckoutPage() {
     await this.checkoutButton.click();
+    logger.debug(`Opening checkout page by clicking '${await this.checkoutButton.selector}' button`);
   }
 }
 
