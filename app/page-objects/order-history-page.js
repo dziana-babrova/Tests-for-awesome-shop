@@ -1,5 +1,5 @@
-import BasePage from "../../app/page-objects/base-page.js";
-import logger from "../../test/config/logger.config.js";
+const BasePage = require("../../app/page-objects/base-page.js");
+const logger = require("../../test/config/logger.config.js");
 class OrderHistoryPage extends BasePage {
   get firstViewButton() {
     return $(".btn-info");
@@ -11,4 +11,4 @@ class OrderHistoryPage extends BasePage {
   }
 }
 
-export default new OrderHistoryPage();
+module.exports = new OrderHistoryPage();

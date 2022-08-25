@@ -1,12 +1,12 @@
-import { faker } from "@faker-js/faker";
+const { faker } = require("@faker-js/faker");
 
-export const testDataForScenario1 = {
+const testDataForScenario1 = {
   textInputValue: faker.lorem.text(Math.round(Math.random() * (4 - 1) + 1)),
   textAreaInputValue: faker.lorem.text(Math.round(Math.random() * (40 - 1) + 1)),
   quantityOfItems: 3,
 };
 
-export const user = {
+const user = {
   email: "SarahJasmine@gmail.com",
   password: "123Qwer!",
   firstName: faker.name.firstName(),
@@ -15,11 +15,13 @@ export const user = {
   city: faker.address.city(),
 };
 
-export const testDataForScenario2 = {
+const testDataForScenario2 = {
   comment: faker.lorem.words(Math.round(Math.random() * (20 - 1) + 1)),
   quantityOfItems: 7,
 };
 
-export const coupons = {
+const coupons = {
   couponLuckyUser: "LuckyUser",
 };
+
+module.exports = { testDataForScenario1, testDataForScenario2, user, coupons };

@@ -1,4 +1,4 @@
-import winston from "winston";
+const winston = require("winston");
 
 const todaysDate = new Date();
 let newFilename =
@@ -13,4 +13,4 @@ const logger = winston.createLogger({
   format: winston.format.combine(winston.format.timestamp(), winston.format.simple())
 });
 
-export default logger; 
+module.exports = logger; 

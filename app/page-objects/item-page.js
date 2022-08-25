@@ -1,5 +1,5 @@
-import BasePage from "../../app/page-objects/base-page.js";
-import logger from "../../test/config/logger.config.js";
+const BasePage = require("../../app/page-objects/base-page.js");
+const logger = require("../../test/config/logger.config.js");
 class ItemPage extends BasePage {
   open() {
     return super.open("/index.php?route=product/product&product_id=42");
@@ -91,4 +91,4 @@ class ItemPage extends BasePage {
   }
 }
 
-export default new ItemPage();
+module.exports = new ItemPage();

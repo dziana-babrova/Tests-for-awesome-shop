@@ -1,7 +1,7 @@
-import Page from "../../app/page-objects/page.js";
-import logger from "../../test/config/logger.config.js";
+const Page = require("../../app/page-objects/page.js");
+const logger = require( "../../test/config/logger.config.js");
 
-export default class BasePage extends Page {
+class BasePage extends Page {
   open() {
     return super.open("/");
   }
@@ -15,8 +15,8 @@ export default class BasePage extends Page {
   }
 
   async goToCartPage() {
-      await this.cartIcon.click();
-      logger.debug(`Viewing minimized cart by clicking '${await this.cartIcon.selector}' icon`);
+    await this.cartIcon.click();
+    logger.debug(`Viewing minimized cart by clicking '${await this.cartIcon.selector}' icon`);
     await this.viewCartLink.click();
     logger.debug(`Viewing full-screen cart by clicking '${await this.viewCartLink.selector}' link`);
   }
@@ -56,3 +56,5 @@ export default class BasePage extends Page {
     logger.debug(`Opening order history page by clicking '${await this.orderHistoryLink.selector}' link`);
   }
 }
+
+module.exports = BasePage;

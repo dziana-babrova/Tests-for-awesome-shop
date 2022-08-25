@@ -1,14 +1,14 @@
-import homePage from "../../app/page-objects/home-page.js";
-import loginPage from "../../app/page-objects/login-page.js";
-import itemPage from "../../app/page-objects/item-page.js";
-import cartPage from "../../app/page-objects/cart-page.js";
-import checkoutPage from "../../app/page-objects/checkout-page.js";
-import successfulCheckoutPage from "../../app/page-objects/successful-checkout-page.js";
-import orderHistoryPage from "../../app/page-objects/order-history-page.js";
-import orderDetailsPage from "../../app/page-objects/order-details-page.js";
-import { user } from "../../app/business-objects/data-for-tests.js";
-import { coupons } from "../../app/business-objects/data-for-tests.js";
-import { testDataForScenario2 } from "../../app/business-objects/data-for-tests.js";
+const homePage = require("../../app/page-objects/home-page.js");
+const loginPage = require("../../app/page-objects/login-page.js");
+const itemPage = require("../../app/page-objects/item-page.js");
+const cartPage = require("../../app/page-objects/cart-page.js");
+const checkoutPage = require("../../app/page-objects/checkout-page.js");
+const successfulCheckoutPage = require("../../app/page-objects/successful-checkout-page.js");
+const orderHistoryPage = require("../../app/page-objects/order-history-page.js");
+const orderDetailsPage = require("../../app/page-objects/order-details-page.js");
+const { user } = require("../../app/business-objects/data-for-tests.js");
+const { coupons } = require("../../app/business-objects/data-for-tests.js");
+const { testDataForScenario2 } = require("../../app/business-objects/data-for-tests.js");
 
 describe("On Awesome-shop", () => {
   it("user could log in and complete a checkout with a coupon", async () => {

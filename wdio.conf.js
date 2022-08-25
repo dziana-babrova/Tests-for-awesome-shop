@@ -1,3 +1,4 @@
+const logger = require("./test/config/logger.config.js");
 exports.config = {
   //
   // ====================
@@ -20,7 +21,7 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ["./test/specs/**/test-scenario-1.js"],
+  specs: ["./test/specs/**/test-scenario-2.js"],
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -211,9 +212,9 @@ exports.config = {
    * Function to be executed before a test (in Mocha/Jasmine) starts.
    */
 
-  // beforeTest: async function (test, context) {
-  //   logger.debug(`hi`);
-  // },
+  beforeTest: async function (test, context) {
+    logger.info(`The test '${test.title}' is running`);
+  },
   /**
    * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
    * beforeEach in Mocha)
@@ -236,8 +237,13 @@ exports.config = {
    * @param {Boolean} result.passed    true if test has passed, otherwise false
    * @param {Object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
    */
-  // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-  // },
+  afterTest: function (test, context, { error, result, duration, passed, retries }) {
+    if (passed) {
+      logger.info(`The test '${test.title}' is successfully completed`);
+    } else {
+      logger.error(`The test '${test.title}' is failed with the following error ${error}`);
+    }
+  },
 
   /**
    * Hook that gets executed after the suite has ended

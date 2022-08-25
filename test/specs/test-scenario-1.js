@@ -1,8 +1,7 @@
-import homePage from "../../app/page-objects/home-page.js";
-import itemPage from "../../app/page-objects/item-page.js";
-import cartPage from "../../app/page-objects/cart-page.js";
-import { testDataForScenario1 } from "../../app/business-objects/data-for-tests.js";
-// import logger from "../config/logger.config.js";
+const homePage = require("../../app/page-objects/home-page.js");
+const itemPage = require("../../app/page-objects/item-page.js");
+const cartPage = require("../../app/page-objects/cart-page.js");
+const { testDataForScenario1 } = require("../../app/business-objects/data-for-tests.js");
 
 describe("On Awesome-shop", () => {
   it("user could add a product to the cart", async () => {

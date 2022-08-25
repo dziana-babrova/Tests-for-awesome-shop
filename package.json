@@ -13,9 +13,8 @@
     "wdio-chromedriver-service": "^7.3.2"
   },
   "scripts": {
-    "wdio": "wdio run wdio.conf.cjs"
+    "wdio": "wdio run wdio.conf.js"
   },
-  "type": "module",
   "dependencies": {
     "winston": "^3.8.1"
   }

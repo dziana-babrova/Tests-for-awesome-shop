@@ -1,5 +1,5 @@
-import BasePage from "../../app/page-objects/base-page.js";
-import logger from "../../test/config/logger.config.js";
+const BasePage = require("../../app/page-objects/base-page.js");
+const logger = require("../../test/config/logger.config.js");
 class CartPage extends BasePage {
   open() {
     return super.open("/index.php?route=checkout/cart");
@@ -80,7 +80,9 @@ class CartPage extends BasePage {
   }
 
   async getTextFromDiscountLine() {
-    return await this.discountLine.getText();
+    const discount = await this.discountLine.getText();
+    logger.debug(`The discount is ${await discount}`);
+    return await discount;
   }
 
   get checkoutButton() {
@@ -93,4 +95,4 @@ class CartPage extends BasePage {
   }
 }
 
-export default new CartPage();
+module.exports = new CartPage();
