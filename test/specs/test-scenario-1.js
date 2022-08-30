@@ -1,29 +1,24 @@
-import homePage from "../../app/page-objects/home-page.js";
-import itemPage from "../../app/page-objects/item-page.js";
-import cartPage from "../../app/page-objects/cart-page.js";
-
-import { faker } from "@faker-js/faker";
-const randomText = {
-  textInputValue: faker.lorem.text(Math.round(Math.random() * (4 - 1) + 1)),
-  textAreaInputValue: faker.lorem.text(Math.round(Math.random() * (40 - 1) + 1)),
-};
+const homePage = require("../../app/page-objects/home-page.js");
+const itemPage = require("../../app/page-objects/item-page.js");
+const cartPage = require("../../app/page-objects/cart-page.js");
+const { testDataForScenario1 } = require("../../app/business-objects/data-for-tests.js");
 
 describe("On Awesome-shop", () => {
   it("user could add a product to the cart", async () => {
     await homePage.open();
     const textForItem = await homePage.getTextFromAppleCinemaItem();
     await homePage.clickAppleCinemaItem();
-    await itemPage.selectItemValues(randomText.textInputValue, randomText.textAreaInputValue);
+    await itemPage.selectItemValues(testDataForScenario1);
     const valueForTextInput = await itemPage.getTextInputValue();
     const valueForTextArea = await itemPage.getTextAreaValue();
-    await itemPage.selectQuantityOfItems(3);
+    await itemPage.selectQuantityOfItems(testDataForScenario1);
     const QuntityOfItemsValue = await itemPage.getQuantityOfItems();
     await itemPage.clickOnAddToCartButton();
 
     await expect(itemPage.successAlert).toBeExisting();
-    await expect(itemPage.successAlert).toHaveTextContaining(
-      `Success: You have added ${textForItem} to your shopping cart!`
-    );
+      await expect(itemPage.successAlert).toHaveTextContaining(
+        `Success: You have added ${textForItem} to your shopping cart!`
+      );
 
     await itemPage.goToCartPage();
 

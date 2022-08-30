@@ -1,4 +1,5 @@
-import BasePage from "../../app/page-objects/base-page.js";
+const BasePage = require("../../app/page-objects/base-page.js");
+const logger = require("../../test/config/logger.config.js");
 class ItemPage extends BasePage {
   open() {
     return super.open("/index.php?route=product/product&product_id=42");
@@ -44,27 +45,37 @@ class ItemPage extends BasePage {
     return $(".alert-success");
   }
 
-  async selectItemValues(textInputValue, textAreaInputValue) {
-    await browser.execute(() => {
+  async selectItemValues(setOfData) {
+    await browser.execute(async () => {
       const radioButton2 = document.querySelectorAll("input[type=radio]")[1];
       const checkbox2 = document.querySelectorAll("input[type=checkbox]")[1];
       const checkbox4 = document.querySelectorAll("input[type=checkbox]")[3];
-      radioButton2.click();
-      checkbox2.click();
-      checkbox4.click();
+      await radioButton2.click();
+      await checkbox2.click();
+      await checkbox4.click();
     });
-    await this.textInput.setValue(textInputValue);
+    logger.debug(
+      `Clicking '${await this.mediumRadioButton.selector}' radiobutton, '${await this.checkbox2.selector}', '${await this.checkbox4
+        .selector}'`
+    );
+    await this.textInput.setValue(setOfData.textInputValue);
+    logger.debug(`Entering '${setOfData.textInputValue}' into '${await this.textInput.selector}' field`);
     await this.colorDropdown.click();
+    logger.debug(`Opening '${await this.colorDropdown.selector}' dropdown with colors`);
     await this.colorOption.click();
-    await this.textArea.setValue(textAreaInputValue);
+    logger.debug(`Selecting '${await this.colorOption.selector}' color`);
+    await this.textArea.setValue(setOfData.textAreaInputValue);
+    logger.debug(`Entering '${setOfData.textAreaInputValue}' into '${await this.textArea.selector}' field`);
   }
 
-  async selectQuantityOfItems(itemsQuantity) {
-    await this.quantityOfItems.setValue(itemsQuantity);
+  async selectQuantityOfItems(quantity) {
+    await this.quantityOfItems.setValue(quantity.quantityOfItems);
+    logger.debug(`Set ${quantity.quantityOfItems} items into '${await this.quantityOfItems.selector}' quantity field`);
   }
 
   async clickOnAddToCartButton() {
     await this.addToCartButton.click();
+    logger.debug(`Clicking '${await this.addToCartButton.selector}' button`);
   }
 
   async getTextInputValue() {
@@ -80,4 +91,4 @@ class ItemPage extends BasePage {
   }
 }
 
-export default new ItemPage();
+module.exports = new ItemPage();

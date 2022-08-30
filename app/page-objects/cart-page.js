@@ -1,5 +1,5 @@
-import BasePage from "../../app/page-objects/base-page.js";
-
+const BasePage = require("../../app/page-objects/base-page.js");
+const logger = require("../../test/config/logger.config.js");
 class CartPage extends BasePage {
   open() {
     return super.open("/index.php?route=checkout/cart");
@@ -61,11 +61,14 @@ class CartPage extends BasePage {
     return $("#button-coupon");
   }
 
-  async applyCoupon() {
+  async applyCoupon(coupon) {
     await this.useCouponCodeOption.click();
-    await this.couponField.setValue("LuckyUser");
+    logger.debug(`Opening Coupon section by clicking '${await this.useCouponCodeOption.selector}' button`);
+    await this.couponField.setValue(coupon.couponLuckyUser);
+    logger.debug(`Entering '${coupon.couponLuckyUser}' into '${await this.couponField.selector}' field`);
     await browser.keys("Tab");
     await browser.keys("Enter");
+    logger.debug("Applying coupon");
   }
 
   get appliedCouponAlert() {
@@ -77,7 +80,9 @@ class CartPage extends BasePage {
   }
 
   async getTextFromDiscountLine() {
-    return await this.discountLine.getText();
+    const discount = await this.discountLine.getText();
+    logger.debug(`The discount is ${await discount}`);
+    return await discount;
   }
 
   get checkoutButton() {
@@ -86,7 +91,8 @@ class CartPage extends BasePage {
 
   async goToCheckoutPage() {
     await this.checkoutButton.click();
+    logger.debug(`Opening checkout page by clicking '${await this.checkoutButton.selector}' button`);
   }
 }
 
-export default new CartPage();
+module.exports = new CartPage();

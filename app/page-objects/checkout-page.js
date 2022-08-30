@@ -1,4 +1,5 @@
-import BasePage from "../../app/page-objects/base-page.js";
+const BasePage = require("../../app/page-objects/base-page.js");
+const logger = require("../../test/config/logger.config.js");
 class CheckoutPage extends BasePage {
   get newBillingAddressRadioButton() {
     return $("label*=new address");
@@ -68,39 +69,55 @@ class CheckoutPage extends BasePage {
     return $("#button-confirm");
   }
 
-  async addNewBillingAddress(firstName, lastName, address, city) {
+  async addNewBillingAddress(user) {
     await this.newAddressRadioButton.click();
-    await this.firstNameInput.setValue(firstName);
-    await this.lastNameInput.setValue(lastName);
-    await this.address1Input.setValue(address);
-    await this.cityInput.setValue(city);
+    logger.debug(`Adding new address by clicking '${await this.newAddressRadioButton.selector}' button`);
+    await this.firstNameInput.setValue(user.firstName);
+    logger.debug(`Entering '${user.firstName}' into '${await this.firstNameInput.selector}' field`);
+    await this.lastNameInput.setValue(user.lastName);
+    logger.debug(`Entering '${user.lastName}' into '${await this.lastNameInput.selector}' field`);
+    await this.address1Input.setValue(user.address);
+    logger.debug(`Entering '${user.address}' into '${await this.address1Input.selector}' field`);
+    await this.cityInput.setValue(user.city);
+    logger.debug(`Entering '${user.city}' into '${await this.cityInput.selector}' field`);
     await this.regionDropdown.click();
+    logger.debug(`Opening '${await this.regionDropdown.selector}' dropdown`);
     await this.regionDropdownOption.click();
+    logger.debug(`Selecting '${await this.regionDropdownOption.selector}'`);
     await this.submitBillingAddressButton.click();
+    logger.debug(`Submitting billing address by clicking '${await this.submitBillingAddressButton.selector}' button`);
   }
 
   async useExistingDeliveryAddress() {
     await this.existingDeliveryAddressRadioButton.click();
+    logger.debug(`Selecting existing delivery address by clicking '${await this.existingDeliveryAddressRadioButton.selector}'`);
     await this.submitDeliveryAddressButton.click();
+    logger.debug(`Submitting delivery address by clicking '${await this.submitDeliveryAddressButton.selector}' button`);
   }
 
-  async addDeliveryMethod(comment) {
-    await this.commentOnOrder.setValue(comment);
+  async addDeliveryMethod(setOfData) {
+    await this.commentOnOrder.setValue(setOfData.comment);
+    logger.debug(`Entering '${await setOfData.comment}' into '${await this.commentOnOrder.selector}' field`);
     await this.submitCommentOnOrderButton.click();
+    logger.debug(`Submitting delivery method by clicking '${await this.submitCommentOnOrderButton.selector}' button`);
   }
 
   async addPaymentMethod() {
     await this.cashOnDeliveryPaymentMethod.click();
+    logger.debug(`Selecting '${await this.cashOnDeliveryPaymentMethod.selector}' payment method`);
   }
 
   async confirmPaymentMethod() {
     await this.agreementToTermsCheckbox.click();
+    logger.debug(`Checking '${await this.agreementToTermsCheckbox.selector}'`);
     await this.submitPaymentMethodButton.click();
+    logger.debug(`Submitting payment method by clicking '${await this.submitPaymentMethodButton.selector}' checkbox`);
   }
 
   async confirmOrder() {
     await this.confirmOrderButton.click();
+    logger.debug(`Confirming order by clicking '${await this.confirmOrderButton.selector}' button`);
   }
 }
 
-export default new CheckoutPage();
+module.exports = new CheckoutPage();
