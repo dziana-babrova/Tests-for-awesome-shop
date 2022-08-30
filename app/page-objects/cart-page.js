@@ -65,10 +65,10 @@ class CartPage extends BasePage {
     await this.useCouponCodeOption.click();
     logger.debug(`Opening Coupon section by clicking '${await this.useCouponCodeOption.selector}' button`);
     await this.couponField.setValue(coupon.couponLuckyUser);
-    logger.debug(`Entering '${await coupon.couponLuckyUser}' into '${await this.couponField.selector}' field`);
+    logger.debug(`Entering '${coupon.couponLuckyUser}' into '${await this.couponField.selector}' field`);
     await browser.keys("Tab");
     await browser.keys("Enter");
-    logger.debug(`Applying coupon`);
+    logger.debug("Applying coupon");
   }
 
   get appliedCouponAlert() {

@@ -73,13 +73,13 @@ class CheckoutPage extends BasePage {
     await this.newAddressRadioButton.click();
     logger.debug(`Adding new address by clicking '${await this.newAddressRadioButton.selector}' button`);
     await this.firstNameInput.setValue(user.firstName);
-    logger.debug(`Entering '${await user.firstName}' into '${await this.firstNameInput.selector}' field`);
+    logger.debug(`Entering '${user.firstName}' into '${await this.firstNameInput.selector}' field`);
     await this.lastNameInput.setValue(user.lastName);
-    logger.debug(`Entering '${await user.lastName}' into '${await this.lastNameInput.selector}' field`);
+    logger.debug(`Entering '${user.lastName}' into '${await this.lastNameInput.selector}' field`);
     await this.address1Input.setValue(user.address);
-    logger.debug(`Entering '${await user.address}' into '${await this.address1Input.selector}' field`);
+    logger.debug(`Entering '${user.address}' into '${await this.address1Input.selector}' field`);
     await this.cityInput.setValue(user.city);
-    logger.debug(`Entering '${await user.city}' into '${await this.cityInput.selector}' field`);
+    logger.debug(`Entering '${user.city}' into '${await this.cityInput.selector}' field`);
     await this.regionDropdown.click();
     logger.debug(`Opening '${await this.regionDropdown.selector}' dropdown`);
     await this.regionDropdownOption.click();

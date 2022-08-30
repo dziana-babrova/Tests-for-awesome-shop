@@ -15,9 +15,9 @@ class LoginPage extends BasePage {
 
   async login(user) {
     await this.inputEmail.setValue(user.email);
-    logger.debug(`Entering '${await user.email}' into '${await this.inputEmail.selector}' field`);
+    logger.debug(`Entering '${user.email}' into '${await this.inputEmail.selector}' field`);
     await this.inputPassword.setValue(user.password);
-    logger.debug(`Entering '${await user.password}' into '${await this.inputPassword.selector}' field`);
+    logger.debug(`Entering '${user.password}' into '${await this.inputPassword.selector}' field`);
     await this.buttonLogin.click();
     logger.debug(`Clicking '${await this.buttonLogin.selector}' button`);
   }

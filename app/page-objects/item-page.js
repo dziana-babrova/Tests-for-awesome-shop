@@ -59,18 +59,18 @@ class ItemPage extends BasePage {
         .selector}'`
     );
     await this.textInput.setValue(setOfData.textInputValue);
-    logger.debug(`Entering '${await setOfData.textInputValue}' into '${await this.textInput.selector}' field`);
+    logger.debug(`Entering '${setOfData.textInputValue}' into '${await this.textInput.selector}' field`);
     await this.colorDropdown.click();
     logger.debug(`Opening '${await this.colorDropdown.selector}' dropdown with colors`);
     await this.colorOption.click();
     logger.debug(`Selecting '${await this.colorOption.selector}' color`);
     await this.textArea.setValue(setOfData.textAreaInputValue);
-    logger.debug(`Entering '${await setOfData.textAreaInputValue}' into '${await this.textArea.selector}' field`);
+    logger.debug(`Entering '${setOfData.textAreaInputValue}' into '${await this.textArea.selector}' field`);
   }
 
   async selectQuantityOfItems(quantity) {
     await this.quantityOfItems.setValue(quantity.quantityOfItems);
-    logger.debug(`Set ${await quantity.quantityOfItems} items into '${await this.quantityOfItems.selector}' quantity field`);
+    logger.debug(`Set ${quantity.quantityOfItems} items into '${await this.quantityOfItems.selector}' quantity field`);
   }
 
   async clickOnAddToCartButton() {
