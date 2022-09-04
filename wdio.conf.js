@@ -1,4 +1,10 @@
 const logger = require("./test/config/logger.config.js");
+const options = require("./test/config/yargs.config.js");
+
+// if (options._.includes("firefox")) {
+//   options.browser = "firefox";
+// }
+
 exports.config = {
   //
   // ====================
@@ -53,10 +59,12 @@ exports.config = {
       // maxInstances can get overwritten per capability. So if you have an in-house Selenium
       // grid with only 5 firefox instances available you can make sure that not more than
       // 5 instances get started at a time.
-      maxInstances: 5,
-      //
-      browserName: "chrome",
+      maxInstances: options.threads,
+
+      browserName: options.browser,
+
       acceptInsecureCerts: true,
+
       // If outputDir is provided WebdriverIO can capture driver session logs
       // it is possible to configure which logTypes to include/exclude.
       // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
@@ -71,7 +79,10 @@ exports.config = {
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevel: "error",
-  //
+  // "wdio:devtoolsOptions": {
+  //   headless: true,
+  // },
+  // //
   // Set specific log levels per logger
   // loggers:
   // - webdriver, webdriverio
@@ -105,6 +116,8 @@ exports.config = {
   //
   // Default request retries count
   connectionRetryCount: 3,
+
+  // headless: options.headless,
   //
   // Test runner services
   // Services take over a specific job you don't want to take care of. They enhance
@@ -295,3 +308,4 @@ exports.config = {
   // onReload: function(oldSessionId, newSessionId) {
   // }
 };
+
