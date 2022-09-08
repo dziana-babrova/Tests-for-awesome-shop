@@ -1,4 +1,4 @@
-var argv = require("yargs/yargs")(process.argv.slice(4))
+const argv = require("yargs/yargs")(process.argv.slice(4))
   .scriptName("npm run wdio")
   .usage("Usage: $0 -- -b [browser name] -t [number of instances] -h")
   .example("$0 -- -b firefox -t 3 -h")
