@@ -1,4 +1,44 @@
 const logger = require("./test/config/logger.config.js");
+const argv = require("./test/config/yargs.config.js");
+
+const capabilities = [
+  {
+    maxInstances: argv.threads,
+
+    browserName: argv.browser,
+
+    "goog:chromeOptions": {
+      args: [],
+    },
+
+    "moz:firefoxOptions": {
+      args: []
+    },
+
+    acceptInsecureCerts: true,
+  },
+];
+
+if (argv.headless && argv.browser === "chrome") {
+  capabilities[0]["goog:chromeOptions"] = {
+    args: [
+      "--headless",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+      "--window-size=1920,1080",
+      "--disable-web-security",
+      "--lang=nl",
+      "ignore-certificate-errors",
+    ]
+  }
+} else if (argv.headless && argv.browser === "firefox") {
+  capabilities[0]["moz:firefoxOptions"] = {
+    args: [
+      "-headless"
+    ]
+}
+}
+
 exports.config = {
   //
   // ====================
@@ -48,21 +88,36 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://saucelabs.com/platform/platform-configurator
   //
-  capabilities: [
-    {
-      // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-      // grid with only 5 firefox instances available you can make sure that not more than
-      // 5 instances get started at a time.
-      maxInstances: 5,
-      //
-      browserName: "chrome",
-      acceptInsecureCerts: true,
-      // If outputDir is provided WebdriverIO can capture driver session logs
-      // it is possible to configure which logTypes to include/exclude.
-      // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
-      // excludeDriverLogs: ['bugreport', 'server'],
-    },
-  ],
+  capabilities: capabilities,
+  //   [
+  //   {
+  //     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
+  //     // grid with only 5 firefox instances available you can make sure that not more than
+  //     // 5 instances get started at a time.
+  //     maxInstances: argv.threads,
+
+  //     browserName: argv.browser,
+
+  //       "goog:chromeOptions": {
+  //         args: [
+  //           "--headless",
+  //           "--disable-dev-shm-usage",
+  //           "--disable-gpu",
+  //           "--window-size=1920,1080",
+  //           "--disable-web-security",
+  //           "--lang=nl",
+  //           "ignore-certificate-errors",
+  //         ],
+  //       },
+
+  //     acceptInsecureCerts: true,
+
+  //     // If outputDir is provided WebdriverIO can capture driver session logs
+  //     // it is possible to configure which logTypes to include/exclude.
+  //     // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
+  //     // excludeDriverLogs: ['bugreport', 'server'],
+  //   },
+  // ],
   //
   // ===================
   // Test Configurations
@@ -71,7 +126,7 @@ exports.config = {
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevel: "error",
-  //
+  // //
   // Set specific log levels per logger
   // loggers:
   // - webdriver, webdriverio
@@ -105,6 +160,8 @@ exports.config = {
   //
   // Default request retries count
   connectionRetryCount: 3,
+
+  // headless: options.headless,
   //
   // Test runner services
   // Services take over a specific job you don't want to take care of. They enhance
