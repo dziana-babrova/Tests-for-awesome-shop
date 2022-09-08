@@ -23,18 +23,12 @@ if (argv.headless && argv.browser === "chrome") {
   capabilities[0]["goog:chromeOptions"] = {
     args: [
       "--headless",
-      "--disable-dev-shm-usage",
-      "--disable-gpu",
-      "--window-size=1920,1080",
-      "--disable-web-security",
-      "--lang=nl",
-      "ignore-certificate-errors",
     ]
   }
 } else if (argv.headless && argv.browser === "firefox") {
   capabilities[0]["moz:firefoxOptions"] = {
     args: [
-      "-headless"
+      "--headless",
     ]
 }
 }
