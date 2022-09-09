@@ -1,18 +1,10 @@
 const { faker } = require("@faker-js/faker");
+const UserBuilder = require("./user-builder.js");
 
 const testDataForScenario1 = {
   textInputValue: faker.lorem.text(Math.round(Math.random() * (4 - 1) + 1)),
   textAreaInputValue: faker.lorem.text(Math.round(Math.random() * (40 - 1) + 1)),
   quantityOfItems: 3,
-};
-
-const user = {
-  email: "SarahJasmine@gmail.com",
-  password: "123Qwer!",
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  address: faker.address.streetAddress({ useFullAddress: false }),
-  city: faker.address.city(),
 };
 
 const testDataForScenario2 = {
@@ -23,5 +15,12 @@ const testDataForScenario2 = {
 const coupons = {
   couponLuckyUser: "LuckyUser",
 };
+
+const user = new UserBuilder()
+  .setFirstName(faker.name.firstName())
+  .setLastName(faker.name.lastName())
+  .setAddress(faker.address.streetAddress({ useFullAddress: false }))
+  .setCity(faker.address.city())
+  .build();
 
 module.exports = { testDataForScenario1, testDataForScenario2, user, coupons };

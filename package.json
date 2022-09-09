@@ -10,10 +10,12 @@
     "@wdio/spec-reporter": "^7.20.8",
     "chai": "^4.3.6",
     "chromedriver": "^103.0.0",
-    "wdio-chromedriver-service": "^7.3.2"
+    "wdio-chromedriver-service": "^7.3.2",
+    "yargs": "^17.5.1"
   },
   "scripts": {
-    "wdio": "wdio run wdio.conf.js"
+    "wdio": "wdio run wdio.conf.js",
+    "test": "npm run wdio"
   },
   "dependencies": {
     "cucumber": "^6.0.7",

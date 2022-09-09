@@ -9,12 +9,15 @@ const orderDetailsPage = require("../../app/page-objects/order-details-page.js")
 const { user } = require("../../app/business-objects/data-for-tests.js");
 const { coupons } = require("../../app/business-objects/data-for-tests.js");
 const { testDataForScenario2 } = require("../../app/business-objects/data-for-tests.js");
+const UserFactory = require("../../app/business-objects/user-factory.js");
+
+const newUser = UserFactory.getDefaultUser();
 
 describe("On Awesome-shop", () => {
   it("user could log in and complete a checkout with a coupon", async () => {
     await homePage.open();
     await homePage.goToLoginPage();
-    await loginPage.login(user);
+    await loginPage.login(newUser);
     await loginPage.goToDefaultPage();
     await homePage.clickIPhoneItem();
     await itemPage.selectQuantityOfItems(testDataForScenario2);
