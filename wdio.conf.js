@@ -55,7 +55,8 @@ exports.config = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
-  specs: ["./test/specs/**/test-scenario-1.js"],
+  // specs: ["./test/specs/**/test-scenario-1.js"],
+  specs: ["./test/features/*.feature"],
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -150,7 +151,7 @@ exports.config = {
   //
   // Default timeout in milliseconds for request
   // if browser driver or grid doesn't send response
-  connectionRetryTimeout: 120000,
+  connectionRetryTimeout: 12000,
   //
   // Default request retries count
   connectionRetryCount: 3,
@@ -169,7 +170,37 @@ exports.config = {
   //
   // Make sure you have the wdio adapter package for the specific framework installed
   // before running any tests.
-  framework: "mocha",
+  framework: "cucumber",
+  cucumberOpts: {
+    // <string[]> (file/dir) require files before executing features
+    require: ["./test/step-definitions/*.step.js"],
+    // <boolean> show full backtrace for errors
+    // backtrace: false,
+    // // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
+    // requireModule: [],
+    // // <boolean> invoke formatters without executing steps
+    // dryRun: false,
+    // // <boolean> abort the run on first failure
+    // failFast: false,
+    // // <string[]> (type[:path]) specify the output format, optionally supply PATH to redirect formatter output (repeatable)
+    // format: ["pretty"],
+    // // <boolean> hide step definition snippets for pending steps
+    // snippets: true,
+    // // <boolean> hide source uris
+    // source: true,
+    // // <string[]> (name) specify the profile to use
+    // profile: [],
+    // // <boolean> fail if there are any undefined or pending steps
+    // strict: false,
+    // // <string> (expression) only execute the features or scenarios with tags matching the expression
+    // tagExpression: "",
+    // <number> timeout for step definitions
+    timeout: 60000,
+    // <boolean> Enable this config to treat undefined definitions as warnings.
+    // ignoreUndefinedDefinitions: false,
+    // ignoreUncaughtExceptions: true,
+  },
+  // framework: "mocha",
   //
   // The number of times to retry the entire specfile when it fails as a whole
   // specFileRetries: 1,
@@ -188,10 +219,10 @@ exports.config = {
   //
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
-  mochaOpts: {
-    ui: "bdd",
-    timeout: 60000,
-  },
+  // mochaOpts: {
+  //   ui: "bdd",
+  //   timeout: 60000,
+  // },
   //
   // =====
   // Hooks
@@ -263,9 +294,9 @@ exports.config = {
    * Function to be executed before a test (in Mocha/Jasmine) starts.
    */
 
-  beforeTest: async function (test, context) {
-    logger.info(`The test '${test.title}' is running`);
-  },
+  // beforeTest: async function (test, context) {
+  //   logger.info(`The test '${test.title}' is running`);
+  // },
   /**
    * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
    * beforeEach in Mocha)
@@ -288,13 +319,13 @@ exports.config = {
    * @param {Boolean} result.passed    true if test has passed, otherwise false
    * @param {Object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
    */
-  afterTest: function (test, context, { error, result, duration, passed, retries }) {
-    if (passed) {
-      logger.info(`The test '${test.title}' is successfully completed`);
-    } else {
-      logger.error(`The test '${test.title}' is failed with the following error ${error}`);
-    }
-  },
+  // afterTest: function (test, context, { error, result, duration, passed, retries }) {
+  //   if (passed) {
+  //     logger.info(`The test '${test.title}' is successfully completed`);
+  //   } else {
+  //     logger.error(`The test '${test.title}' is failed with the following error ${error}`);
+  //   }
+  // },
 
   /**
    * Hook that gets executed after the suite has ended

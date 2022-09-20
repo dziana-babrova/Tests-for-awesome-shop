@@ -11,14 +11,15 @@ const argv = require("yargs/yargs")(process.argv.slice(4))
   .option("b", {
     alias: "browser",
     type: "string",
-    default: "firefox",
+    default: "chrome",
     describe: "set browser",
   })
   .option("t", {
     alias: "threads",
     type: "number",
+    default: 1,
     describe: "set number of browser instances",
-    demandOption: "Please provide number of browser instances",
+    // demandOption: "Please provide number of browser instances",
   })
  .help().argv;
 
