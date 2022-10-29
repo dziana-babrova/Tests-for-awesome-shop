@@ -5,8 +5,8 @@ const RpService = require("wdio-reportportal-service");
 
 const conf = {
   reportPortalClientConfig: {
-    token: "f36c85c7-6c11-496b-9caa-567569ca034d",
-    uuid: "f36c85c7-6c11-496b-9caa-567569ca034d",
+    token: process.env.token,
+    uuid: process.env.token,
     endpoint: "https://reportportal.epam.com/api/v1",
     launch: "dziana_babrova_TEST_EXAMPLE",
     project: "dziana_babrova_personal",
